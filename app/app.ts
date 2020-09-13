@@ -1,6 +1,9 @@
 import express from 'express'
+import { router } from './models/route/v1'
 
 const app: express.Express = express()
+
+const port = process.env.PORT || 3000
 
 // CORSの許可
 app.use((req, res, next) => {
@@ -14,11 +17,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // ルーティング
-const router: express.Router = express.Router()
-router.get('/api/v1', (req: express.Request, res: express.Response) => {
-  res.send(req.query)
-})
-app.use(router)
+app.use('/api/v1/', router)
 
 // 3000番ポートでAPIサーバ起動
-app.listen(3000, () => { console.log('Example app listening on port 3000!') })
+app.listen(port, () => { console.log(`listen on port ${port}`) })
